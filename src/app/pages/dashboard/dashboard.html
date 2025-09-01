@@ -1,0 +1,11 @@
+<!-- dashboard.html -->
+<div class="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background">
+  <div class="container mx-auto px-4 py-8 space-y-8"> <!-- espaço vertical -->
+    <app-dashboard-header />
+
+    <div class="grid gap-8"> <!-- cards e gráficos com mesmo gap -->
+      <app-metrics-grid [metrics]="metrics" />
+      <app-analytics-chart />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<!-- src/app/pages/leads/leads.html -->
+<section class="space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <input class="px-3 py-2 rounded-lg border w-60"
+           placeholder="Buscar..."
+           [value]="q()"
+           (input)="onSearch($event)" />
+
+    <select class="px-3 py-2 rounded-lg border"
+            [value]="status()"
+            (change)="onStatusChange($event)">
+      <option value="all">Todos</option>
+      <option value="new">New</option>
+      <option value="qualified">Qualified</option>
+      <option value="won">Won</option>
+      <option value="lost">Lost</option>
+    </select>
+
+    <button class="ml-auto px-3 py-2 rounded-lg bg-primary text-primary-foreground"
+            (click)="onExport()">
+      Exportar CSV
+    </button>
+  </div>
+
+  <div *ngIf="loading()">Carregando...</div>
+
+  <div class="overflow-auto rounded-2xl border bg-card">
+    <table class="min-w-full text-sm">
+      <thead class="text-left text-muted-foreground">
+        <tr>
+          <th class="px-4 py-3">Nome</th>
+          <th class="px-4 py-3">Email</th>
+          <th class="px-4 py-3">Empresa</th>
+          <th class="px-4 py-3">Status</th>
+          <th class="px-4 py-3">Criado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let l of leads()" class="border-t">
+          <td class="px-4 py-3 font-medium">{{ l.name }}</td>
+          <td class="px-4 py-3">{{ l.email || '-' }}</td>
+          <td class="px-4 py-3">{{ l.company || '-' }}</td>
+          <td class="px-4 py-3"><app-status-badge [status]="l.status"/></td>
+          <td class="px-4 py-3">{{ l.createdAt | date:'shortDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

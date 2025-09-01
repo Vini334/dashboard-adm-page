@@ -1,13 +1,11 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { LucideAngularModule, Users, UserPlus, Heart, MessageSquare, Share2, Activity } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
-    provideRouter(routes), provideClientHydration(withEventReplay())
+    // ...
+    importProvidersFrom(
+      LucideAngularModule.pick({ Users, UserPlus, Heart, MessageSquare, Share2, Activity })
+    )
   ]
 };
