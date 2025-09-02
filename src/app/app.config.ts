@@ -1,11 +1,10 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { LucideAngularModule, Users, UserPlus, Heart, MessageSquare, Share2, Activity } from 'lucide-angular';
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    // ...
-    importProvidersFrom(
-      LucideAngularModule.pick({ Users, UserPlus, Heart, MessageSquare, Share2, Activity })
-    )
-  ]
+  providers: [provideRouter(routes), provideHttpClient()]
 };

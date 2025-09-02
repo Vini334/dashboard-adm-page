@@ -1,11 +1,111 @@
-<!-- dashboard.html -->
 <div class="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background">
-  <div class="container mx-auto px-4 py-8 space-y-8"> <!-- espaço vertical -->
+  <div class="container mx-auto px-4 py-8 space-y-8">
     <app-dashboard-header />
 
-    <div class="grid gap-8"> <!-- cards e gráficos com mesmo gap -->
-      <app-metrics-grid [metrics]="metrics" />
+    <div class="grid gap-8">
+      <div (click)="onUsuariosClick()">
+        <app-metrics-grid [metrics]="metrics" />
+      </div>
       <app-analytics-chart />
     </div>
+  </div>
+</div>
+
+<div *ngIf="isListModalVisible" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 style="font-size: 25px;">Lista de Usuários</h2>
+      <button class="add-button" (click)="onCreateClick()">Adicionar Usuário</button>
+      <button class="close-button" (click)="closeListModal()">X</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+        <tbody>
+            <tr *ngFor="let usuario of listaUsuarios">
+              <td>{{ usuario.id }}</td>
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.email }}</td>
+              <td class="action-buttons">
+                <div class="action-item">
+                  <button class="edit-button" (click)="onEditClick(usuario)">
+                    &#9998;
+                  </button>
+                  <span class="action-text">Editar</span>
+                </div>
+                <div class="action-item">
+                  <button class="delete-button" (click)="usuario.id && onDeleteClick(usuario.id)">
+                    &#10006;
+                  </button>
+                  <span class="action-text">Excluir</span>
+                </div>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="isEditModalVisible" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Editar Usuário</h2>
+      <button class="close-button" (click)="closeEditModal()">X</button>
+    </div>
+
+    <form *ngIf="usuarioEditando" (ngSubmit)="onSaveEdit()">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="usuarioEditando.nome" name="nome" required>
+      </div>
+      <div class="form-group">
+        <label for="sobrenome">Sobrenome</label>
+        <input id="sobrenome" [(ngModel)]="usuarioEditando.sobrenome" name="sobrenome" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input id="email" [(ngModel)]="usuarioEditando.email" name="email" type="email" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="closeEditModal()">Cancelar</button>
+        <button type="submit">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="isCreateModalVisible" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Criar Novo Usuário</h2>
+      <button class="close-button" (click)="closeCreateModal()">X</button>
+    </div>
+
+    <form (ngSubmit)="onSaveNewUser()">
+      <div class="form-group">
+        <label for="new-nome">Nome</label>
+        <input id="new-nome" [(ngModel)]="novoUsuario.nome" name="new-nome" required>
+      </div>
+      <div class="form-group">
+        <label for="new-sobrenome">Sobrenome</label>
+        <input id="new-sobrenome" [(ngModel)]="novoUsuario.sobrenome" name="new-sobrenome" required>
+      </div>
+      <div class="form-group">
+        <label for="new-email">E-mail</label>
+        <input id="new-email" [(ngModel)]="novoUsuario.email" name="new-email" type="email" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="closeCreateModal()">Cancelar</button>
+        <button type="submit">Salvar</button>
+      </div>
+    </form>
   </div>
 </div>
